@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="tone.js"></script>
+    <!-- <script src="timeline.js"></script> -->
+    <script type="text/javascript">
+		var piano = new Tone.Sampler({
+			"A0" : "./A0.mp3",
+			"C1" : "./C1.mp3",
+			"D#1" : "./Ds1.mp3",
+			"F#1" : "./Fs1.mp3",
+			"A1" : "./A1.mp3",
+			"C2" : "./C2.mp3",
+			"D#2" : "./Ds2.mp3",
+			"F#2" : "./Fs2.mp3",
+			"A2" : "./A2.mp3",
+			"C3" : "./C3.mp3",
+			"D#3" : "./Ds3.mp3",
+			"F#3" : "./Fs3.mp3",
+			"A3" : "./A3.mp3",
+			"C4" : "./C4.mp3",
+			"D#4" : "./Ds4.mp3",
+			"F#4" : "./Fs4.mp3",
+			"A4" : "./A4.mp3",
+			"C5" : "./C5.mp3",
+			"D#5" : "./Ds5.mp3",
+			"F#5" : "./Fs5.mp3",
+			"A5" : "./A5.mp3",
+			"C6" : "./C6.mp3",
+			"D#6" : "./Ds6.mp3",
+			"F#6" : "./Fs6.mp3",
+			"A6" : "./A6.mp3",
+			"C7" : "./C7.mp3",
+			"D#7" : "./Ds7.mp3",
+			"F#7" : "./Fs7.mp3",
+			"A7" : "./A7.mp3",
+			"C8" : "./C8.mp3"
+		}, function(){
+            document.querySelector('#play').addEventListener('click', function(){
+                document.addEventListener('keydown', playNote);
+            });
+        }).toMaster();
+        var notes = ['A','As','B','C','Cs','D','Ds','E','F','Fs','G','Gs'];
+        //Because typing out 88 different notes would take too long....
+        var keys = (function(){
+            var i = 0;
+            var j = 0;
+            var list = [];
+            while(i != 8){
+                if(notes[j] == 'C') i++;
+                list.push((!notes[j].includes('s')) ? (notes[j] + i) : (notes[j][0] + '#' + i));
+                console.log(list[list.length - 1]);
+                if(j == notes.length - 1) j = 0;
+                else j++;
+            }
+            return list;
+        })();
+        var k = 0;
+        var inc = 1;
+        function playNote(evt){
+            switch(evt.code){
+                case "KeyA": 
+                    piano.triggerAttackRelease("D4",1.5)
+                    break;
+                case "KeyS": 
+                    piano.triggerAttackRelease("D#4",1.5)
+                    break;
+                case "KeyD": 
+                    piano.triggerAttackRelease("E4",1.5)
+                    break;
+                case "KeyF": 
+                    piano.triggerAttackRelease("F4",1.5)
+                    break;
+                case "KeyG": 
+                    piano.triggerAttackRelease("G4",1.5)
+                    break;
+                case "KeyH": 
+                    piano.triggerAttackRelease("A4",1.5)
+                    break;
+                case "KeyJ": 
+                    piano.triggerAttackRelease("B4",1.5)
+                    break;
+                case "KeyK": 
+                    piano.triggerAttackRelease("C5",1.5)
+                    break;
+                case "KeyL": 
+                    piano.triggerAttackRelease("D5",1.5)
+                    break;
+                case "Semicolon": 
+                    piano.triggerAttackRelease("E5",1.5)
+                    break;
+                case "Quote": 
+                    piano.triggerAttackRelease("F5",1.5)
+                    break;
+                case "KeyQ":
+                    console.log(keys[k]);
+                    piano.triggerAttackRelease(keys[k],1)
+                    k += inc;
+                    if(k == 82) inc = -1;
+                    if(k == 0) inc = 1;
+                default: break;                
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="play">Play Note</button>
+</body>
+</html>
